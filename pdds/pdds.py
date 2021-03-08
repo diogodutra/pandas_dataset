@@ -12,6 +12,8 @@ class Dataset:
     import pandas as pd
     from pdds import pdds
 
+    folder = 'my_images'
+
     df = pd.DataFrame()
     (df.dataset
       .from_folder(folder)
