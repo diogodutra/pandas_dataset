@@ -34,8 +34,8 @@ class Dataset:
   @property
   def classes(self):
     "Returns the list of classes found in dataset."
-    labels = self.labels
-    return sorted(list(set(self.labels))) if labels is not None else None
+    labels = self.labels_decoded
+    return sorted(list(set(labels))) if labels is not None else None
 
 
   @property
@@ -46,16 +46,16 @@ class Dataset:
 
 
   @property
-  def labels(self):
-    "Returns the list of string containing the labels."
+  def labels_decoded(self):
+    "Returns the list of strings containing the orignal (decoded) labels."
     return self._obj['label'].values if 'label' in self._obj.columns else None
 
 
   @property
-  def y(self):
-    "Returns the list of labels encoded as integers."
+  def labels_encoded(self):
+    "Returns the list of targets (encoded labels as integers)."
     classes = self.classes
-    labels = self.labels
+    labels = self.labels_decoded
     return [classes.index(l) for l in labels] if (
         (classes is not None) and (labels is not None)) else None
 
