@@ -11,20 +11,24 @@ class Dataset:
   Ex:
     import pandas as pd
     from pdds import pdds
+    from fastai.vision import *
 
-    folder = 'my_images'
+    # download a dummy dataset
+    path = untar_data(URLs.MNIST_TINY)
+    folder = str(path) + '/train'
 
+    # create an empty Pandas DataFrame
     df = pd.DataFrame()
+
+    # populate df with info found in folders
     (df.dataset
       .from_folder(folder)
       .label_by_parent_folder()
-      .split_by_stratification(k=4, origin='train', to='valid')
-      .split_by_stratification(k=4, origin='train', to='test')
+      .split_by_stratification(k=20, origin='train', to='valid')
+      .split_by_stratification(k=100, origin='train', to='test')
     )
 
-    df.dataset.plot_splits()
-    
-    df.dataset.count_classes()
+    df.dataset.plot_splits() 
   """
 
   def __init__(self, pandas_obj):
@@ -157,11 +161,7 @@ class Dataset:
 
 
   def label_by_parent_folder(self):
-    """Labels each sample by the name of its parent folder.
-
-    Args:
-      func (lambda function): returns class label (str) from argument filepath.
-    """
+    """Labels each sample by the name of its parent folder."""
     return self.label_by_function(lambda fname: fname.split('/')[-2])
 
 
@@ -169,7 +169,7 @@ class Dataset:
     """Returns indices of filepaths that match the 'col_name' in 'field' column.
 
     Args:
-      col_name (str): field (columns) to look for value.
+      col_name (str): field (in columns) to look for value.
       value (str): key to be matched, used as mask to filter samples of indices.
     """
     return list(self._obj[self._obj[col_name] == value].index
