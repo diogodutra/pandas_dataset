@@ -29,16 +29,26 @@ Now your Pandas DataFrames are supercharged with additional methods in the new `
 
 
 ```
+import pandas as pd
+from pdds import pdds
+from fastai.vision import *
+
+# download a dummy dataset
+path = untar_data(URLs.MNIST_TINY)
+folder = str(path) + '/train'
+
+# create an empty Pandas DataFrame
 df = pd.DataFrame()
 
+# populate df with info found in folders
 (df.dataset
-  .from_folder('my_classified_images')
+  .from_folder(folder)
   .label_by_parent_folder()
-  .split_by_stratification(k=4, origin='train', to='valid')
-  .split_by_stratification(k=4, origin='train', to='test')
+  .split_by_stratification(k=20, origin='train', to='valid')
+  .split_by_stratification(k=100, origin='train', to='test')
 )
 
-df.dataset.plot_splits() 
+df.dataset.plot_splits()
 ```
 
 Other remarkable tools are crawling files in subfolders, getting indices of subsets (ie: split, class) and plotting counts of samples grouped by different criteria. Know all properties and methods with `help(df.dataset)`.
