@@ -9,12 +9,13 @@ class Dataset:
   """Pandas DataFrame extension to analyse dataset for classification.
 
   Ex:
-    get_class = lambda filepath: filepath.split('/')[-2]
+    import pandas as pd
+    from pdds import pdds
 
     df = pd.DataFrame()
     (df.dataset
       .from_folder(folder)
-      .label_by_function(get_class)
+      .label_by_parent_folder()
       .split_by_stratification(k=4, origin='train', to='valid')
       .split_by_stratification(k=4, origin='train', to='test')
     )
@@ -149,3 +150,12 @@ class Dataset:
     """
     self._obj['label'] = [func(f) for f in self._obj.filepath]
     return self
+
+
+  def label_by_parent_folder(self):
+    """Labels each sample by the name of its parent folder.
+
+    Args:
+      func (lambda function): returns class label (str) from argument filepath.
+    """
+    return self.label_by_function(lambda fname: fname.split('/')[-2])
