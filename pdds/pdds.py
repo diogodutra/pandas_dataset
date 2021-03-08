@@ -24,7 +24,7 @@ class Dataset:
 
     df.dataset.plot_splits()
     
-    df.dataset.count_occurrences()
+    df.dataset.count_classes()
   """
 
   def __init__(self, pandas_obj):
@@ -60,14 +60,14 @@ class Dataset:
         (classes is not None) and (labels is not None)) else None
 
 
-  def count_occurrences(self):
+  def count_classes(self):
     "Returns dictionary with counts of samples grouped by label."
     return self._obj[['filepath', 'label']].groupby('label').count()
 
 
-  def plot_occurrences(self, **kwargs):
-    "Plots the counts of samples grouped by label."
-    self.count_occurrences().plot.bar(legend=None, **kwargs)
+  def plot_classes(self, **kwargs):
+    "Plots the counts of samples grouped by label/class."
+    self.count_classes().plot.bar(legend=None, **kwargs)
 
 
   def count_splits(self):
