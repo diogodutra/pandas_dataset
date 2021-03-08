@@ -161,3 +161,32 @@ class Dataset:
       func (lambda function): returns class label (str) from argument filepath.
     """
     return self.label_by_function(lambda fname: fname.split('/')[-2])
+
+
+  def indices_of(self, col_name, value):
+    """Returns indices of filepaths that match the 'col_name' in 'field' column.
+
+    Args:
+      col_name (str): field (columns) to look for value.
+      value (str): key to be matched, used as mask to filter samples of indices.
+    """
+    return list(self._obj[self._obj[col_name] == value].index
+                ) if col_name in self._obj.columns else None 
+
+
+  def indices_of_split(self, split_name='train'):
+    """Returns indices of filepaths that are assigned to a type of split.
+
+    Args:
+      split_name (str, default 'train'): split name to filter samples of indices.
+    """
+    return self.indices_of('split', split_name)
+
+
+  def indices_of_label(self, label_name):
+    """Returns indices of filepaths that are related to a class/label.
+
+    Args:
+      label_name (str): label/class name to filter samples of indices.
+    """
+    return self.indices_of('label', label_name)
