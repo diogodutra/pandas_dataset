@@ -75,7 +75,7 @@ class Dataset:
   def plot_splits(self, **kwargs):
     "Plots the count of samples grouped by types of split."
     self.count_splits().plot.bar(**kwargs)
-    cols = df.dataset.count_splits().columns
+    cols = self.count_splits().columns
     plt.legend(self.splits)
 
 
