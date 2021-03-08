@@ -149,3 +149,12 @@ class Dataset:
     """
     self._obj['label'] = [func(f) for f in self._obj.filepath]
     return self
+
+
+  def label_by_parent_folder(self):
+    """Labels each sample by the name of its parent folder.
+
+    Args:
+      func (lambda function): returns class label (str) from argument filepath.
+    """
+    return self.label_by_function(lambda fname: fname.split('/')[-2])
