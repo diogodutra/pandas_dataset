@@ -68,6 +68,7 @@ class Dataset:
   def plot_classes(self, **kwargs):
     "Plots the counts of samples grouped by label/class."
     self.count_classes().plot.bar(legend=None, **kwargs)
+    plt.ylabel('samples')
 
 
   def count_splits(self):
@@ -80,6 +81,7 @@ class Dataset:
     self.count_splits().plot.bar(**kwargs)
     cols = self.count_splits().columns
     plt.legend(self.splits)
+    plt.ylabel('samples')
 
 
   def split_by_stratification(self, k=1, *,
